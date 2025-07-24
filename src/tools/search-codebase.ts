@@ -1,5 +1,5 @@
 import { resolve, extname } from 'path';
-import type { ToolResponse, SearchQuery } from '../types/index.js';
+import type { ToolResponse } from '../types/index.js';
 import { 
   ANGULAR_PROJECT_PATH, 
   ALLOWED_EXTENSIONS,

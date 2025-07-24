@@ -1,5 +1,4 @@
 import { readFile } from 'fs/promises';
-import { basename, extname } from 'path';
 
 export interface FileContext {
   imports?: string[];

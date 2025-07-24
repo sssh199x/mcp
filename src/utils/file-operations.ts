@@ -1,9 +1,9 @@
 import { readFile, access, stat, readdir } from 'fs/promises';
 import { join, resolve, relative, extname } from 'path';
 
-import type { SearchResult,ComponentInfo, ServiceInfo, FileValidationResult } from '../types/index.js';
+import type { SearchResult} from '../types/index.js';
 
-export const ANGULAR_PROJECT_PATH = resolve(process.cwd(), "../learning-notebook");
+export const ANGULAR_PROJECT_PATH = resolve("/Users/exosolve/IdeaProjects/learning-notebook");
 export const ALLOWED_EXTENSIONS = ['.ts', '.html', '.scss', '.css', '.json', '.md', '.js'];
 
 /**

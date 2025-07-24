@@ -1,6 +1,6 @@
 import { readFile, access, stat, readdir } from 'fs/promises';
 import { join, resolve, relative, extname } from 'path';
-export const ANGULAR_PROJECT_PATH = resolve(process.cwd(), "../learning-notebook");
+export const ANGULAR_PROJECT_PATH = resolve("/Users/exosolve/IdeaProjects/learning-notebook");
 export const ALLOWED_EXTENSIONS = ['.ts', '.html', '.scss', '.css', '.json', '.md', '.js'];
 /**
  * Utility function to validate file path and check permissions

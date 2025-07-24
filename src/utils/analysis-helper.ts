@@ -1,5 +1,5 @@
 import { readFile, readdir, stat } from 'fs/promises';
-import { join, extname, relative } from 'path';
+import { join, relative } from 'path';
 import type { ComponentInfo, ServiceInfo } from '../types/index.js';
 import { ANGULAR_PROJECT_PATH } from './file-operations.js';
 

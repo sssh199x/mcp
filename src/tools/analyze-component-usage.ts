@@ -1,4 +1,4 @@
-import { readFile, readdir, stat } from 'fs/promises';
+import { readFile, readdir } from 'fs/promises';
 import { join, relative, extname } from 'path';
 import type { ToolResponse } from '../types/index.js';
 import { ANGULAR_PROJECT_PATH, ALLOWED_EXTENSIONS } from '../utils/file-operations.js';
