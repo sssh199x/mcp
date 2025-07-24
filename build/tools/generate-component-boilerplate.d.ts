@@ -1,28 +1,34 @@
 import type { ToolResponse } from '../types/index.js';
-export declare function createSearchCodebaseTool(): {
+export declare function createGenerateComponentBoilerplateTool(): {
     name: string;
     description: string;
     inputSchema: {
         type: "object";
         properties: {
-            query: {
+            name: {
                 type: string;
                 description: string;
             };
-            fileTypes: {
+            type: {
+                type: string;
+                enum: string[];
+                description: string;
+                default: string;
+            };
+            features: {
                 type: string;
                 items: {
                     type: string;
                 };
                 description: string;
-                default: never[];
+                default: string[];
             };
-            directory: {
+            includeReadme: {
                 type: string;
                 description: string;
-                default: string;
+                default: boolean;
             };
-            includeContext: {
+            includeTests: {
                 type: string;
                 description: string;
                 default: boolean;
@@ -31,11 +37,12 @@ export declare function createSearchCodebaseTool(): {
         required: string[];
         additionalProperties: boolean;
     };
-    handler: ({ query, fileTypes, directory, includeContext }: {
-        query: string;
-        fileTypes?: string[];
-        directory?: string;
-        includeContext?: boolean;
+    handler: ({ name, type, features, includeReadme, includeTests }: {
+        name: string;
+        type?: string;
+        features?: string[];
+        includeReadme?: boolean;
+        includeTests?: boolean;
     }) => Promise<ToolResponse>;
 };
-//# sourceMappingURL=search-codebase.d.ts.map
+//# sourceMappingURL=generate-component-boilerplate.d.ts.map

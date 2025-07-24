@@ -13,17 +13,27 @@ export function createSearchCodebaseTool() {
                 },
                 fileTypes: {
                     type: "array",
-                    items: { type: "string" },
-                    description: "File extensions to search (e.g., ['.ts', '.html']). If not specified, searches all allowed types"
+                    items: {
+                        type: "string"
+                    },
+                    description: "File extensions to search (e.g., ['.ts', '.html']). If not specified, searches all allowed types",
+                    default: []
                 },
                 directory: {
                     type: "string",
-                    description: "Specific directory to search within (relative to project root)"
+                    description: "Specific directory to search within (relative to project root)",
+                    default: ""
+                },
+                includeContext: {
+                    type: "boolean",
+                    description: "Include enhanced context for code completion (future feature). Default: false",
+                    default: false
                 }
             },
-            required: ["query"]
+            required: ["query"],
+            additionalProperties: false
         },
-        handler: async ({ query, fileTypes, directory }) => {
+        handler: async ({ query, fileTypes, directory, includeContext = false }) => {
             try {
                 const searchDir = directory ? resolve(ANGULAR_PROJECT_PATH, directory) : ANGULAR_PROJECT_PATH;
                 const allowedTypes = fileTypes || ALLOWED_EXTENSIONS;
@@ -47,6 +57,7 @@ export function createSearchCodebaseTool() {
 - **Files Searched**: ${totalFiles}
 - **Files with Matches**: ${matchedFiles}
 - **Total Matches**: ${results.length}
+- **Enhanced Context**: ${includeContext ? '🔧 Coming Soon!' : '❌ Disabled'}
 
 ${results.length === 0 ? `## ❌ No Results Found
 
@@ -71,7 +82,7 @@ No matches found for "${query}" in the specified location.
 - Search for "interface": Find TypeScript interfaces
 - Search for "bg-card": Find design token usage` : `## 📝 Search Results
 
-${results.slice(0, 20).map((result, index) => `### ${index + 1}. ${result.file}
+${results.slice(0, 20).map((result, index) => `### ${index + 1}. ${result.file} ${getFileTypeEmoji(result.file)}
 **Line ${result.line}**: \`${result.context.trim()}\`
 
 \`\`\`${extname(result.file).substring(1) || 'text'}
@@ -79,14 +90,17 @@ ${result.excerpt}
 \`\`\`
 ---`).join('\n\n')}
 
-${results.length > 20 ? `\n*Showing first 20 of ${results.length} results. Use more specific search terms to narrow results.*` : ''}
+${results.length > 20 ? `\n*Showing first 20 of ${results.length} results. Use more specific search terms to narrow results.*` : ''}`}
 
 ## 🎯 Search Analysis
-${generateSearchAnalysis(results, query)}`}
+${generateSearchAnalysis(results, query)}
 
 ## 🔄 Related Searches
 Try these related searches:
-${generateRelatedSearches(query, results).map(suggestion => `- "${suggestion}"`).join('\n')}`
+${generateRelatedSearches(query, results).map(suggestion => `- "${suggestion}"`).join('\n')}
+
+${includeContext ? `## 🔧 Enhanced Context
+Enhanced context with imports, exports, and dependencies will be available soon! This will help Claude understand your codebase better for intelligent completion.` : ''}`
                         }
                     ]
                 };
@@ -112,5 +126,23 @@ ${generateRelatedSearches(query, results).map(suggestion => `- "${suggestion}"`)
             }
         }
     };
+}
+/**
+ * Get emoji for file type
+ */
+function getFileTypeEmoji(filePath) {
+    if (filePath.includes('.component.ts'))
+        return '🧩';
+    if (filePath.includes('.service.ts'))
+        return '⚙️';
+    if (filePath.includes('models/') || filePath.includes('.interface.ts'))
+        return '📋';
+    if (filePath.endsWith('.html'))
+        return '🎨';
+    if (filePath.endsWith('.scss') || filePath.endsWith('.css'))
+        return '💅';
+    if (filePath.endsWith('.ts'))
+        return '📘';
+    return '📄';
 }
 //# sourceMappingURL=search-codebase.js.map

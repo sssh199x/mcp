@@ -10,6 +10,10 @@ import { createProjectOverviewTool } from "./tools/project-overview.js";
 import { createReadFileTool } from "./tools/read-file.js";
 import { createSearchCodebaseTool } from "./tools/search-codebase.js";
 import { createAnalyzeArchitectureTool } from "./tools/analyze-architecture.js";
+import { createGetUIComponentsTool } from "./tools/get-ui-components.js";
+import { createGetDesignTokensTool } from "./tools/get-design-tokens.js";
+import { createAnalyzeComponentUsageTool } from "./tools/analyze-component-usage.js";
+import { createGenerateComponentBoilerplateTool } from "./tools/generate-component-boilerplate.js";
 
 /**
  * Learning Notebook MCP Server
@@ -91,6 +95,76 @@ server.tool(
   async ({ focusArea }) => {
     const tool = createAnalyzeArchitectureTool();
     return tool.handler({ focusArea });
+  }
+);
+
+/**
+ * Tool: Get UI Components
+ */
+server.tool(
+  "get_ui_components",
+  "Get detailed information about all UI components in the Learning Notebook component library including props, variants, and usage examples",
+  {
+    component: z.string().optional().describe("Optional: Get details for a specific component (e.g., 'button', 'stats-card'). If not specified, returns all components"),
+    includeExamples: z.boolean().optional().describe("Include usage examples and code snippets. Default: true")
+  },
+  async ({ component, includeExamples }) => {
+    const tool = createGetUIComponentsTool();
+    return tool.handler({ component, includeExamples });
+  }
+);
+
+/**
+ * Tool: Get Design Tokens
+ */
+server.tool(
+  "get_design_tokens",
+  "Get comprehensive information about the Tailwind v4 design system including colors, typography, spacing, and CSS custom properties used in the Learning Notebook project",
+  {
+    category: z.enum(["all", "colors", "typography", "spacing", "shadows", "transitions", "components"]).optional().describe("Filter design tokens by category. Default: 'all'"),
+    includeExamples: z.boolean().optional().describe("Include usage examples for each token. Default: true"),
+    format: z.enum(["detailed", "reference", "css"]).optional().describe("Output format: detailed (full docs), reference (quick lookup), css (raw values). Default: 'detailed'")
+  },
+  async ({ category, includeExamples, format }) => {
+    const tool = createGetDesignTokensTool();
+    return tool.handler({ category, includeExamples, format });
+  }
+);
+
+/**
+ * Tool: Analyze Component Usage
+ */
+server.tool(
+  "analyze_component_usage",
+  "Analyze how components are used throughout the Learning Notebook project, showing usage patterns, import relationships, and architectural insights",
+  {
+    component: z.string().optional().describe("Optional: Analyze usage of a specific component (e.g., 'ButtonComponent', 'app-button'). If not specified, analyzes all components"),
+    includeContext: z.boolean().optional().describe("Include code context around each usage. Default: true"),
+    groupBy: z.enum(["component", "file", "category"]).optional().describe("Group results by component, file, or category. Default: 'component'"),
+    showUnused: z.boolean().optional().describe("Include components that are not used anywhere. Default: false")
+  },
+  async ({ component, includeContext, groupBy, showUnused }) => {
+    const tool = createAnalyzeComponentUsageTool();
+    return tool.handler({ component, includeContext, groupBy, showUnused });
+  }
+);
+
+/**
+ * Tool: Generate Component Boilerplate
+ */
+server.tool(
+  "generate_component_boilerplate",
+  "Generate complete Angular component boilerplate following Learning Notebook patterns and conventions, including TypeScript, HTML, SCSS, README, and test files",
+  {
+    name: z.string().describe("Component name in kebab-case (e.g., 'task-card', 'user-profile'). Will be converted to proper naming conventions"),
+    type: z.enum(["ui", "layout", "feature", "page"]).optional().describe("Component type: ui (reusable UI component), layout (app structure), feature (business logic), page (route component)"),
+    features: z.array(z.string()).optional().describe("Component features to include: ['inputs', 'outputs', 'variants', 'loading', 'accessibility', 'animations', 'docs']"),
+    includeReadme: z.boolean().optional().describe("Generate comprehensive README documentation. Default: true"),
+    includeTests: z.boolean().optional().describe("Generate test file boilerplate. Default: false")
+  },
+  async ({ name, type, features, includeReadme, includeTests }) => {
+    const tool = createGenerateComponentBoilerplateTool();
+    return tool.handler({ name, type, features, includeReadme, includeTests });
   }
 );
 

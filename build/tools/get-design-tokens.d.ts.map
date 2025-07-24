@@ -1,0 +1,1 @@
+{"version":3,"file":"get-design-tokens.d.ts","sourceRoot":"","sources":["../../src/tools/get-design-tokens.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,mBAAmB,CAAC;AAGtD,wBAAgB,yBAAyB;;;;;;;;;;;;;;;;;;;;;;;;;;;qDA4B8C;QACjF,QAAQ,CAAC,EAAE,MAAM,CAAC;QAClB,eAAe,CAAC,EAAE,OAAO,CAAC;QAC1B,MAAM,CAAC,EAAE,MAAM,CAAC;KACjB,KAAG,OAAO,CAAC,YAAY,CAAC;EAiD5B"}

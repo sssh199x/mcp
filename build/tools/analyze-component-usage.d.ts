@@ -1,23 +1,11 @@
 import type { ToolResponse } from '../types/index.js';
-export declare function createSearchCodebaseTool(): {
+export declare function createAnalyzeComponentUsageTool(): {
     name: string;
     description: string;
     inputSchema: {
         type: "object";
         properties: {
-            query: {
-                type: string;
-                description: string;
-            };
-            fileTypes: {
-                type: string;
-                items: {
-                    type: string;
-                };
-                description: string;
-                default: never[];
-            };
-            directory: {
+            component: {
                 type: string;
                 description: string;
                 default: string;
@@ -27,15 +15,26 @@ export declare function createSearchCodebaseTool(): {
                 description: string;
                 default: boolean;
             };
+            groupBy: {
+                type: string;
+                enum: string[];
+                description: string;
+                default: string;
+            };
+            showUnused: {
+                type: string;
+                description: string;
+                default: boolean;
+            };
         };
-        required: string[];
+        required: never[];
         additionalProperties: boolean;
     };
-    handler: ({ query, fileTypes, directory, includeContext }: {
-        query: string;
-        fileTypes?: string[];
-        directory?: string;
+    handler: ({ component, includeContext, groupBy, showUnused }: {
+        component?: string;
         includeContext?: boolean;
+        groupBy?: string;
+        showUnused?: boolean;
     }) => Promise<ToolResponse>;
 };
-//# sourceMappingURL=search-codebase.d.ts.map
+//# sourceMappingURL=analyze-component-usage.d.ts.map

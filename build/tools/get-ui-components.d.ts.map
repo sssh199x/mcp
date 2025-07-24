@@ -1,0 +1,1 @@
+{"version":3,"file":"get-ui-components.d.ts","sourceRoot":"","sources":["../../src/tools/get-ui-components.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,mBAAmB,CAAC;AAGtD,wBAAgB,yBAAyB;;;;;;;;;;;;;;;;;;;;8CAqBuB;QAC1D,SAAS,CAAC,EAAE,MAAM,CAAC;QACnB,eAAe,CAAC,EAAE,OAAO,CAAC;KAC3B,KAAG,OAAO,CAAC,YAAY,CAAC;EA0D5B"}

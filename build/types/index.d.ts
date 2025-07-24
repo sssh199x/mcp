@@ -31,12 +31,24 @@ export interface SearchQuery {
     query: string;
     fileTypes?: string[];
     directory?: string;
+    includeContext?: boolean;
 }
 export interface SearchResult {
     file: string;
     line: number;
     context: string;
     excerpt: string;
+}
+export interface EnhancedSearchResult extends SearchResult {
+    fileType: 'component' | 'service' | 'interface' | 'template' | 'style' | 'typescript' | 'other';
+    imports?: string[];
+    exports?: string[];
+    dependencies?: string[];
+    interfaces?: string[];
+    methods?: string[];
+    components?: string[];
+    services?: string[];
+    relevanceScore?: number;
 }
 export interface ComponentInfo {
     name: string;
@@ -67,6 +79,15 @@ export interface ArchitectureAnalysis {
     routing?: any;
     models?: any;
     patterns?: any;
+}
+export interface FileContext {
+    imports?: string[];
+    exports?: string[];
+    dependencies?: string[];
+    interfaces?: string[];
+    methods?: string[];
+    components?: string[];
+    services?: string[];
 }
 export interface ToolResponse {
     [x: string]: unknown;
